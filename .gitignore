@@ -1,0 +1,38 @@
+# Ignore Docker-related files and volumes
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+docker-data/
+*.pid
+
+# Ignore MySQL data directory
+mysql-data/
+custom-mysql.cnf
+
+# Ignore Redis data directory
+redis-data/
+
+# Ignore node_modules if you're using Node.js
+node_modules/
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore temporary files and swap files
+*.swp
+*.swo
+*.tmp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore environmental configuration files
+.env
+.env.local
+
+# Ignore IDE specific settings (optional)
+.vscode/
+.idea/
+*.iml

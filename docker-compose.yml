@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis-global
+    ports:
+      - "6379:6379"  # Redis port
+      - "8001:8001"  # Redis Insight UI
+    volumes:
+      - ./redis-data:/data  # Persist Redis data
+    networks:
+      - global-services-network
+    restart: always
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql-global
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"  # MySQL port
+    volumes:
+      - ./mysql-data:/var/lib/mysql  # Persist MySQL data
+    networks:
+      - global-services-network
+    restart: always
+
+networks:
+  global-services-network:
+    external: true
