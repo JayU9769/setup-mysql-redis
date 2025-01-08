@@ -31,4 +31,4 @@ services:
 
 networks:
   global-services-network:
-    external: true
+    driver: bridge  # Automatically create a bridge network
