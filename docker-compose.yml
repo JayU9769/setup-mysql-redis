@@ -29,6 +29,21 @@ services:
       - global-services-network
     restart: always
 
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8888:80"  # Expose phpMyAdmin on port 8888
+    environment:
+      PMA_HOST: mysql-global  # Connect phpMyAdmin to MySQL container
+      PMA_USER: root          # MySQL user
+      PMA_PASSWORD: root      # MySQL password
+      PMA_ARBITRARY: 1        # Allow connections to arbitrary MySQL hosts
+    networks:
+      - global-services-network
+    restart: always
+
+
 networks:
   global-services-network:
     driver: bridge  # Automatically create a bridge network
