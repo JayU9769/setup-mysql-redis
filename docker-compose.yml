@@ -46,4 +46,5 @@ services:
 
 networks:
   global-services-network:
-    driver: bridge  # Automatically create a bridge network
+    name: global-services-network  # Explicitly define the network name
+    driver: bridge
