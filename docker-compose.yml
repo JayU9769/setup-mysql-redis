@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   redis:
     image: redis/redis-stack:latest
@@ -25,9 +27,15 @@ services:
       - "3306:3306"  # MySQL port
     volumes:
       - ./mysql-data:/var/lib/mysql  # Persist MySQL data
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf  # Mount custom config
     networks:
       - global-services-network
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -42,9 +50,21 @@ services:
     networks:
       - global-services-network
     restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
 
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP server
+    networks:
+      - global-services-network
+    restart: always
 
 networks:
   global-services-network:
-    name: global-services-network  # Explicitly define the network name
+    name: global-services-network
     driver: bridge
